@@ -1,7 +1,7 @@
-var express = require('express')
-var app     = express()
+var express = require('express');
+var app     = express();
 
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
 var mongoose = require('mongoose');
 var db = mongoose.connection;
@@ -13,7 +13,7 @@ db.once('open', function() {
 });
 
 const allowHeaders = ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Cache-Control'];
-app.use(function(req, res, nect) {
+app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', allowHeaders);
   res.header('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, OPTIONS, PUT');
@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 
 app.options('/api/$', function(req, res) {
   res.send();
-})
+});
 
 app.get('/', function(req, res) {
   res.send('hello world');

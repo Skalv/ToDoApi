@@ -37,8 +37,9 @@ module.exports = function(express, db) {
       var update = {};
       if (req.body.title) update.title = req.body.title;
       if (req.body.description) update.description = req.body.description;
+      if (req.body.state) update.state = req.body.state;
       console.log(update);
-      Todo.findOneAndUpdate(query, update, {new: true}, function(err, updatedTodo) {
+      Todo.findOneAndUpdate(query, update, {new: true, runValidators: true}, function(err, updatedTodo) {
         if (err) return res.status(500).send(err);
         res.json(updatedTodo);
       })
