@@ -12,8 +12,22 @@ db.once('open', function() {
   console.log("connected to database !");
 });
 
+const allowHeaders = ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Cache-Control'];
+app.use(function(req, res, nect) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', allowHeaders);
+  res.header('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, OPTIONS, PUT');
+  next();
+})
+
+app.use(require('morgan')('dev'));
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+
+app.options('/api/$', function(req, res) {
+  res.send();
+})
 
 app.get('/', function(req, res) {
   res.send('hello world');
